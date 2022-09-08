@@ -1,0 +1,12 @@
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/bin/Debug/net6.0/Squirrel-MYSQL.deps.json
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/bin/Debug/net6.0/Squirrel-MYSQL.dll
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/bin/Debug/net6.0/Squirrel-MYSQL.pdb
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/Squirrel-MYSQL.csproj.AssemblyReference.cache
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/Squirrel-MYSQL.GeneratedMSBuildEditorConfig.editorconfig
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/Squirrel-MYSQL.AssemblyInfoInputs.cache
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/Squirrel-MYSQL.AssemblyInfo.cs
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/Squirrel-MYSQL.csproj.CoreCompileInputs.cache
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/Squirrel-MYSQL.dll
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/ref/Squirrel-MYSQL.dll
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/Squirrel-MYSQL.pdb
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/refint/Squirrel-MYSQL.dll

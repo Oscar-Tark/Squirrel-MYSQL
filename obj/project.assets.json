@@ -5,10 +5,14 @@
       "MySqlConnector/2.1.8": {
         "type": "package",
         "compile": {
-          "lib/net6.0/MySqlConnector.dll": {}
+          "lib/net6.0/MySqlConnector.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/MySqlConnector.dll": {}
+          "lib/net6.0/MySqlConnector.dll": {
+            "related": ".xml"
+          }
         }
       }
     }
@@ -55,11 +59,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ferret/GIT/Scorpion-IEE/dotnet/scorpion_sql/scorpion_sql.csproj",
-      "projectName": "scorpion_sql",
-      "projectPath": "/home/ferret/GIT/Scorpion-IEE/dotnet/scorpion_sql/scorpion_sql.csproj",
+      "projectUniqueName": "/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/Squirrel-MYSQL.csproj",
+      "projectName": "Squirrel-MYSQL",
+      "projectPath": "/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/Squirrel-MYSQL.csproj",
       "packagesPath": "/home/ferret/.nuget/packages/",
-      "outputPath": "/home/ferret/GIT/Scorpion-IEE/dotnet/scorpion_sql/obj/",
+      "outputPath": "/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/ferret/.nuget/NuGet/NuGet.Config"
@@ -97,7 +101,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -106,7 +111,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.100/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/ferret/.dotnet/sdk/6.0.400/RuntimeIdentifierGraph.json"
       }
     }
   }

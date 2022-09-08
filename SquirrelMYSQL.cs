@@ -103,7 +103,7 @@ public class ScorpionSql:IDisposable
         return;
     }
 
-    public void test(string connection_string)
+    public void scfmtmySqlTest(string connection_string)
     {
             using (var connection = new MySqlConnection(connection_string))
             {
