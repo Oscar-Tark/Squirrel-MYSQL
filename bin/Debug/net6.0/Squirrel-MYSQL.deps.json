@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "Squirrel-MYSQL/1.0.0": {
         "dependencies": {
-          "MySqlConnector": "2.1.8"
+          "MySqlConnector": "2.1.8",
+          "consolereadwrite": "1.0.0"
         },
         "runtime": {
           "Squirrel-MYSQL.dll": {}
@@ -20,6 +21,11 @@
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.1.8.0"
           }
+        }
+      },
+      "consolereadwrite/1.0.0": {
+        "runtime": {
+          "consolereadwrite.dll": {}
         }
       }
     }
@@ -36,6 +42,11 @@
       "sha512": "sha512-CVJ0w9PbUnBS3lfOII1J15DshAnJgKqkrvKfkTSiUerPjJpSAfv7LJR5aJNnzj+LdFw2grekguVe1kedp6LMyA==",
       "path": "mysqlconnector/2.1.8",
       "hashPath": "mysqlconnector.2.1.8.nupkg.sha512"
+    },
+    "consolereadwrite/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

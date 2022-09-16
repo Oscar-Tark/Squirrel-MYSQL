@@ -3,50 +3,87 @@
 * [id:int] [tag|path:string] [subtag|identifier(name, age...):string] [data:string]
 */
 
-using System;
-using System.Data;
 using System.Collections;
 using MySqlConnector;
-using System.ComponentModel;
+using ScorpionConsoleReadWrite;
 
 namespace ScorpionMySql
 {
 public class ScorpionSql:IDisposable
 {
-    public object scfmtSqlGet(string connection_string, string table, string path, string identifier, string data, string token)
+    private const string user_table = "users";
+    private const string scorpion_formatted_table = "scfmt";
+
+    //Create a schema with default tables
+    public void scfmtMariaDbCreateSchema(string connection_string, string name)
+    {
+        try
+        {
+            using (var connection = new MySqlConnection(connection_string))
+            {
+                connection.Open();
+                using (var command = new MySqlCommand($"CREATE SCHEMA {name};", connection))
+                {                    
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        ConsoleWrite.writeSuccess("Schema created. Run the 'mysqlnew' command with a renewed connection string selecting the new schema in order to create the default formatted tables");
+                    }
+                    catch(System.Exception e){ ConsoleWrite.writeError(e.Message); }
+                }
+                connection.Close();
+            }
+        }
+        catch(System.Exception e)
+        {
+            ConsoleWrite.writeError(e.Message);
+        }
+        finally
+        {
+            writeSuccessMessage();
+        }
+        return;
+    }
+
+    public Dictionary<string, string> scfmtSqlGet(string connection_string, string table, string path, string identifier, string data, string token)
     {
         //Get data from MySql in the generic format: [id:int] [tag|path:string] [subtag|identifier(name, age...):string] [data:string]
 
-        ArrayList returnable_data = new ArrayList();
+        //Returns this variable
+        Dictionary<string, string> returnable = new Dictionary<string, string>();
 
-        
-        try{
-        using (var connection = new MySqlConnection(connection_string))
+        try
         {
-            connection.Open();
-            using (var command = new MySqlCommand(string.Format("SELECT * FROM {0} WHERE tag=@path AND subtag=@identifier AND data LIKE @data AND token=@token;", table), connection))
+            using (var connection = new MySqlConnection(connection_string))
             {
-                command.Parameters.AddWithValue("tag", path);
-                command.Parameters.AddWithValue("subtag", identifier);
-                command.Parameters.AddWithValue("data", string.Format("%{0}%", data));
-                command.Parameters.AddWithValue("token", token);
-
-                using (var reader = command.ExecuteReader())
+                connection.Open();
+                using (var command = new MySqlCommand(string.Format("SELECT * FROM {0} WHERE tag=@tag AND subtag LIKE @subtag AND data LIKE @data AND token=@token;", table), connection))
                 {
-                    while (reader.Read())
+                    command.Parameters.AddWithValue("tag", path);
+                    command.Parameters.AddWithValue("subtag", string.Format("%{0}%", identifier));
+                    command.Parameters.AddWithValue("data", string.Format("%{0}%", data));
+                    command.Parameters.AddWithValue("token", token);
+
+                    using (var reader = command.ExecuteReader())
                     {
                         if(reader.HasRows)
-                            Console.WriteLine("Data has been returned by MySql");
-                        else
-                            Console.WriteLine("No data has been returned by MySql");
-                        returnable_data.Add(reader.GetString(3));
+                        {
+                            while (reader.Read())
+                            {
+                                returnable.Add(reader.GetString(2), reader.GetString(3));
+                            }
+                        }
                     }
                 }
+                connection.Close();
             }
         }
+        catch(System.Exception e){ ConsoleWrite.writeError(e.Message); }
+        finally
+        {
+            writeSuccessMessage();
         }
-        catch(System.Exception e){ System.Console.WriteLine(e.Message); }
-        return (object)returnable_data;
+        return returnable;
     }
 
     public void scfmtSqlSet(string connection_string, string table, string path, string identifier, string data, string token)
@@ -55,51 +92,97 @@ public class ScorpionSql:IDisposable
         
         try
         {
-        using (var connection = new MySqlConnection(connection_string))
-        {
-            connection.Open();
-            using (var command = new MySqlCommand(string.Format("INSERT INTO {0} values(DEFAULT, @tag, @subtag, @data, @token)", table), connection))
+            using (var connection = new MySqlConnection(connection_string))
             {
-                command.Parameters.AddWithValue("tag", path);
-                command.Parameters.AddWithValue("subtag", identifier);
-                command.Parameters.AddWithValue("data", data);
-                command.Parameters.AddWithValue("token", token);
-
-                using (var reader = command.ExecuteReader())
+                connection.Open();
+                using (var command = new MySqlCommand(string.Format("INSERT INTO {0} values(DEFAULT, @tag, @subtag, @data, @token)", table), connection))
                 {
-                    try
+                    command.Parameters.AddWithValue("tag", path);
+                    command.Parameters.AddWithValue("subtag", identifier);
+                    command.Parameters.AddWithValue("data", data);
+                    command.Parameters.AddWithValue("token", token);
+
+                    using (var reader = command.ExecuteReader())
                     {
-                        command.ExecuteNonQuery();
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch(System.Exception e){ ConsoleWrite.writeError(e.Message); }
                     }
-                    catch(System.Exception e){ System.Console.WriteLine(e.Message); }
                 }
+                connection.Close();
             }
         }
+        catch(System.Exception e){ ConsoleWrite.writeError(e.Message); }
+        finally
+        {
+            writeSuccessMessage();
         }
-        catch(System.Exception e){ System.Console.WriteLine(e.Message); }
         return;
     }
 
-    public void sqlfmtnew(string connection_string, string table_name)
+    public void sqlfmtUpdate(string connection_string, string table, string path, string identifier, string update_with_data, string token)
+    {
+        try
+        {
+            using (var connection = new MySqlConnection(connection_string))
+            {
+                connection.Open();
+                using (var command = new MySqlCommand(string.Format("UPDATE {0} SET data=@data WHERE tag=@tag AND subtag=@subtag AND token=@token", table), connection))
+                {
+                    command.Parameters.AddWithValue("tag", path);
+                    command.Parameters.AddWithValue("subtag", identifier);
+                    command.Parameters.AddWithValue("data", update_with_data);
+                    command.Parameters.AddWithValue("token", token);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch(System.Exception e){ ConsoleWrite.writeError(e.Message); }
+                    }
+                }
+                connection.Close();
+            }
+        }
+        catch(System.Exception e)
+        { 
+            ConsoleWrite.writeError(e.Message);
+        }
+        finally
+        {
+            writeSuccessMessage();
+        }
+    }
+
+    public void sqlfmtNew(string connection_string, string table_name)
     {
         //Creates a new generic data table with the following default format: [id:int] [tag|path:string] [subtag|identifier(name, age...):string] [data:string]
         
         try
         {
-        using (var connection = new MySqlConnection(connection_string))
-        {
-            connection.Open();
-            using (var command = new MySqlCommand(string.Format("CREATE TABLE {0} (id INT NOT NULL AUTO_INCREMENT, tag VARCHAR(128) NOT NULL, subtag VARCHAR(32) NOT NULL, data VARCHAR(2048) NULL, token VARCHAR(256) NOT NULL, PRIMARY KEY (id))", table_name), connection))
+            using (var connection = new MySqlConnection(connection_string))
             {
-                try
+                connection.Open();
+                using (var command = new MySqlCommand(string.Format("CREATE TABLE {0} (id INT NOT NULL AUTO_INCREMENT, tag VARCHAR(128) NOT NULL, subtag VARCHAR(32) NOT NULL, data VARCHAR(2048) NULL, token VARCHAR(256) NOT NULL, PRIMARY KEY (id))", table_name), connection))
                 {
-                    command.ExecuteNonQuery();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch(System.Exception e){ ConsoleWrite.writeError(e.Message); }
                 }
-                catch(System.Exception e){ System.Console.WriteLine(e.Message); }
+                connection.Close();
             }
         }
+        catch(Exception e){ ConsoleWrite.writeError(e.Message); }
+        finally
+        {
+            writeSuccessMessage();
         }
-        catch(Exception e){ Console.WriteLine(e.Message); }
         return;
     }
 
@@ -109,15 +192,21 @@ public class ScorpionSql:IDisposable
             {
                 try
                 {
-                connection.Open();
-                using (var command = new MySqlCommand("SELECT json FROM module_users;", connection))
-                using (var reader = command.ExecuteReader())
-                    while (reader.Read())
-                        Console.WriteLine(reader.GetString(0));
-                connection.Close();        
+                    connection.Open();
+                    using (var command = new MySqlCommand("SELECT json FROM module_users;", connection))
+                    using (var reader = command.ExecuteReader())
+                        while (reader.Read())
+                            Console.WriteLine(reader.GetString(0));
+                    connection.Close();        
                 }
                 catch(System.Exception e)
-                { System.Console.WriteLine(e.Message); }
+                {
+                    ConsoleWrite.writeError(e.Message);
+                }
+                finally
+                {
+                    writeSuccessMessage();
+                }
             }
             return;
     }
@@ -125,6 +214,12 @@ public class ScorpionSql:IDisposable
     public void Dispose()
     {
         GC.SuppressFinalize(this);
+        return;
+    }
+
+    private void writeSuccessMessage()
+    {
+        ScorpionConsoleReadWrite.ConsoleWrite.writeSuccess("MariaDB/MySQL OK.");
         return;
     }
 }

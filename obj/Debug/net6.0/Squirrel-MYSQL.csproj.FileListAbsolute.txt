@@ -10,3 +10,6 @@
 /home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/ref/Squirrel-MYSQL.dll
 /home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/Squirrel-MYSQL.pdb
 /home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/refint/Squirrel-MYSQL.dll
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/bin/Debug/net6.0/consolereadwrite.dll
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/bin/Debug/net6.0/consolereadwrite.pdb
+/home/ferret/GIT/Squirrel_Project/Squirrel-MYSQL/obj/Debug/net6.0/Squirrel-MYSQL.csproj.CopyComplete

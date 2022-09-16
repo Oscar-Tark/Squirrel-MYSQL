@@ -14,6 +14,16 @@
             "related": ".xml"
           }
         }
+      },
+      "consolereadwrite/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/consolereadwrite.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/consolereadwrite.dll": {}
+        }
       }
     }
   },
@@ -46,11 +56,17 @@
         "mysqlconnector.2.1.8.nupkg.sha512",
         "mysqlconnector.nuspec"
       ]
+    },
+    "consolereadwrite/1.0.0": {
+      "type": "project",
+      "path": "../Squirrel-Console-Read-Write/consolereadwrite.csproj",
+      "msbuildProject": "../Squirrel-Console-Read-Write/consolereadwrite.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "MySqlConnector >= 2.1.8"
+      "MySqlConnector >= 2.1.8",
+      "consolereadwrite >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -77,7 +93,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/home/ferret/GIT/Squirrel_Project/Squirrel-Console-Read-Write/consolereadwrite.csproj": {
+              "projectPath": "/home/ferret/GIT/Squirrel_Project/Squirrel-Console-Read-Write/consolereadwrite.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
