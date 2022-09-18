@@ -3,7 +3,6 @@
 * [id:int] [tag|path:string] [subtag|identifier(name, age...):string] [data:string]
 */
 
-using System.Collections;
 using MySqlConnector;
 using ScorpionConsoleReadWrite;
 
@@ -45,12 +44,11 @@ public class ScorpionSql:IDisposable
         return;
     }
 
-    public Dictionary<string, string> scfmtSqlGet(string connection_string, string table, string path, string identifier, string data, string token)
+    public /*Dictionary<string, string>*/ void scfmtSqlGet(string connection_string, string table, string path, string identifier, string data, string token, out Dictionary<string, string> returns)
     {
         //Get data from MySql in the generic format: [id:int] [tag|path:string] [subtag|identifier(name, age...):string] [data:string]
-
         //Returns this variable
-        Dictionary<string, string> returnable = new Dictionary<string, string>();
+        returns = new Dictionary<string, string>();
 
         try
         {
@@ -70,7 +68,7 @@ public class ScorpionSql:IDisposable
                         {
                             while (reader.Read())
                             {
-                                returnable.Add(reader.GetString(2), reader.GetString(3));
+                                returns.Add(reader.GetString(2), reader.GetString(3));
                             }
                         }
                     }
@@ -83,7 +81,6 @@ public class ScorpionSql:IDisposable
         {
             writeSuccessMessage();
         }
-        return returnable;
     }
 
     public void scfmtSqlSet(string connection_string, string table, string path, string identifier, string data, string token)
