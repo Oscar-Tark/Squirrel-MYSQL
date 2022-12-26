@@ -44,7 +44,7 @@ public class ScorpionSql:IDisposable
         return;
     }
 
-    public /*Dictionary<string, string>*/ void scfmtSqlGet(string connection_string, string table, string path, string identifier, string data, string token, out Dictionary<string, string> returns)
+    public void scfmtSqlGet(string connection_string, string table, string path, string identifier, string data, string token, out Dictionary<string, string> returns)
     {
         //Get data from MySql in the generic format: [id:int] [tag|path:string] [subtag|identifier(name, age...):string] [data:string]
         //Returns this variable
@@ -86,7 +86,6 @@ public class ScorpionSql:IDisposable
     public void scfmtSqlSet(string connection_string, string table, string path, string identifier, string data, string token)
     {
         //Set data into MySql in the generic format: [id:int] [tag|path:string] [subtag|identifier(name, age...):string] [data:string]
-        
         try
         {
             using (var connection = new MySqlConnection(connection_string))
